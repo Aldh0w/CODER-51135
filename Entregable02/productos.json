@@ -1,11 +1,11 @@
 [
 	{
-		"id": 2,
-		"title": "Modifico el titulo",
-		"description": "description01",
+		"id": 1,
+		"title": "Producto de prueba",
+		"description": "Descripcion de prueba",
 		"price": 1200,
 		"thumbnail": "thumbnail prueba",
-		"code": 111111,
+		"code": 1234,
 		"stock": 25
 	}
 ]
