@@ -1,0 +1,22 @@
+{
+  "name": "entregable03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Entregable03.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/Entregable04.js",
+    "dev": "nodemon src/Entregable04.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+
+}
