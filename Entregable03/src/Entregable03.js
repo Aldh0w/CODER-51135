@@ -6,6 +6,45 @@ const PORT = 8080;
 
 const app = express();
 
+app.use(express.urlencoded({extended:true}))
+
+
+app.get('/', (req, res)=>{
+    res.send('Bienvenido esta es la pagina principal, los endpoint existentes son /products')
+})
+
+
+app.get('/products', async (req, res)=>{
+    const{ max } = req.query
+    const allProducts = await productos.getProduct();
+    const productQuery = []
+    if(!max){
+        res.json(allProducts)        
+    }else if(max > allProducts.length){
+        res.json(allProducts)
+    }else{
+        for(let i=0; i<max; i++){
+            productQuery.push(allProducts[i])
+        }
+        res.json(productQuery)
+    }
+
+})
+
+app.get('/products/:id',async (req,res)=>{
+    const { id } = req.params
+    //console.log(id)
+    const productId = await productos.getProductById(id);
+    //console.log(productId)
+    if(!productId){
+        res.send('El id del producto es inexistente');
+    }
+
+    res.json(productId)
+})
+
+
+
 app.listen(PORT, ()=>{
     console.log(`Server run on port: ${PORT}`)
 })
@@ -42,12 +81,13 @@ class ProductManager{
         const productos = await this.obtenerJson();
 
         //Buscamos si el ID existe, si no existe enviamos NOT FOUND, si existe mostramos cual es el producto
-        const busqueda = productos.find(dato => dato.id === id);
+        const busqueda = productos.find(dato => dato.id === parseInt(id));
         if(!busqueda){
             throw new Error('Not found')
         }else{
-            console.log(`El producto con id ${id} es:`);
-            console.log(busqueda)
+            /*console.log(`El producto con id ${id} es:`);
+            console.log(busqueda)*/
+            return(busqueda)
         }
     }
 
@@ -129,10 +169,10 @@ class ProductManager{
     }
 
 }
+const productos = new ProductManager('productos')
 
 /*const main = async() =>{
     
-    const productos = new ProductManager('productos')
     console.log("1_ Traer todos los productos");
     const getAll = await productos.getProduct();
     console.log(getAll);

@@ -7,5 +7,23 @@
 		"thumbnail": "thumbnail prueba",
 		"code": 1234,
 		"stock": 25
+	},
+	{
+		"id": 2,
+		"title": "Producto de prueba2",
+		"description": "Descripcion de prueba2",
+		"price": 1202,
+		"thumbnail": "thumbnail prueba2",
+		"code": 12334,
+		"stock": 25
+	},
+	{
+		"id": 3,
+		"title": "Producto de prueba3",
+		"description": "Descripcion de prueba3",
+		"price": 33333,
+		"thumbnail": "thumbnail prueba3",
+		"code": 333334,
+		"stock": 25
 	}
 ]
