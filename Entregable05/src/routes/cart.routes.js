@@ -4,9 +4,15 @@ const router = Router();
 const cart = carrito;
 
 
-router.post('/',(req,res)=>{
-    const nuevoCarro = carrito.crearCarrito();
+router.post('/', async (req,res)=>{
+    const nuevoCarro = await carrito.crearCarrito();
 })
 
+router.get('/:cid',async (req,res)=>{
+    const { cid } = req.params
+    const carritoId = await carrito.getCartId(cid)
+
+    res.send(carritoId)
+})
 
 export default router

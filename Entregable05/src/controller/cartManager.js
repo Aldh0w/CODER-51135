@@ -39,6 +39,17 @@ class CartManager{
         return await this.actualizarArchivo(carrito)
     }
 
+    async getCartId(id){
+        //Traemos los archivos en formato JSON para poder realizar la busqueda del ID
+        const cart = await this.obtenerJson();
+        //Buscamos si el ID existe, si no existe enviamos NOT FOUND, si existe mostramos cual es el producto
+        const busqueda = cart.find(dato => dato.idCart === parseInt(id));
+        if(!busqueda){
+            throw new Error('Not found')
+        }else{
+            return(busqueda.products)
+        }
+    }
 
 }
 
