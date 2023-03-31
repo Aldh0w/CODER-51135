@@ -2,5 +2,22 @@
 	{
 		"idCart": 1,
 		"products": []
+	},
+	{
+		"idCart": 2,
+		"products": [
+			{
+				"productId": 2,
+				"quantity": 9
+			},
+			{
+				"productId": 1,
+				"quantity": 10
+			},
+			{
+				"productId": 3,
+				"quantity": 8
+			}
+		]
 	}
 ]

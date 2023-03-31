@@ -1,4 +1,6 @@
 import fs from 'fs';
+import productManager from './productManager.js'
+const product = productManager;
 
 class Carrito{
     constructor(){
@@ -40,14 +42,55 @@ class CartManager{
     }
 
     async getCartId(id){
-        //Traemos los archivos en formato JSON para poder realizar la busqueda del ID
-        const cart = await this.obtenerJson();
-        //Buscamos si el ID existe, si no existe enviamos NOT FOUND, si existe mostramos cual es el producto
-        const busqueda = cart.find(dato => dato.idCart === parseInt(id));
-        if(!busqueda){
-            throw new Error('Not found')
+        const carrito = []
+      //Traemos los archivos en formato JSON para poder realizar la busqueda del ID
+      const cart = await this.obtenerJson();
+      //Buscamos si el ID existe, si no existe enviamos NOT FOUND, si existe mostramos cual es el producto
+      const busqueda = cart.find(dato => dato.idCart === parseInt(id));
+      if(!busqueda){
+          throw new Error('Not found')
+      }else{
+        //carrito.push(busqueda)
+        return(busqueda)
+      }
+    }
+
+
+    async addCart(cid,pid,cantidad){
+
+        if(!cid || !pid || !cantidad){
+            throw new Error('Faltan ingresar datos')
+        }
+
+        if(cantidad<=0){
+            throw new Error('La cantidad debe ser mayor que 0')
+        }
+
+        const cant = cantidad
+        const carritoCompleto = await this.obtenerJson();
+        const carritoId = await this.getCartId(cid)
+        const index = carritoCompleto.findIndex((dato)=> dato.idCart === parseInt(cid))
+        const busquedaIndex = carritoId.products.findIndex(dato => dato.productId === parseInt(pid));
+        const busqueda = carritoId.products.find(dato => dato.productId === parseInt(pid));
+        const productoCompleto = await product.getProductById(pid)
+        const producto ={    
+            productId: productoCompleto.id,    
+            quantity: cant.cantidad
+        }
+
+        
+        if(carritoId.length === 0){
+            carritoCompleto[index].products.push(producto)
+
+            return this.actualizarArchivo(carritoCompleto);   
+        }else if(busqueda){
+            producto.quantity = busqueda.quantity + producto.quantity
+            carritoCompleto[index].products[busquedaIndex].quantity =producto.quantity
+            return this.actualizarArchivo(carritoCompleto);  
+            
         }else{
-            return(busqueda.products)
+        carritoCompleto[index].products.push(producto)
+        return this.actualizarArchivo(carritoCompleto);
         }
     }
 
